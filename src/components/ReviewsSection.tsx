@@ -94,35 +94,37 @@ const ReviewsSection = () => {
   };
 
   return (
-    <section className="py-16 bg-gradient-to-br from-purple-50 to-blue-50">
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-gray-800 mb-4">
-            Отзывы наших клиентов
+    <section className="py-20 bg-gradient-to-br from-purple-50/80 via-pink-50/80 to-blue-50/80 backdrop-blur-sm relative">
+      <div className="absolute inset-0 bg-gradient-to-r from-purple-100/20 to-blue-100/20"></div>
+      <div className="container mx-auto px-4 relative z-10">
+        <div className="text-center mb-16 animate-fade-in">
+          <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent mb-6">
+            ⭐ Отзывы наших клиентов
           </h2>
-          <p className="text-gray-600">
+          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
             Что говорят о нас жители Калач-на-Дону
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 max-w-4xl mx-auto">
-          {mockReviews.map((review) => (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+          {mockReviews.map((review, index) => (
             <Card
               key={review.id}
-              className="hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
+              className="hover:shadow-2xl transition-all duration-500 hover:-translate-y-3 bg-white/90 backdrop-blur-sm border-0 shadow-xl hover:bg-gradient-to-br hover:from-white hover:to-purple-50/50 animate-slide-in-right"
+              style={{ animationDelay: `${index * 150}ms` }}
             >
-              <CardContent className="p-6">
-                <div className="flex items-start gap-4">
+              <CardContent className="p-8">
+                <div className="flex items-start gap-6">
                   <button
                     onClick={() => handleUserClick(review.user)}
-                    className="flex-shrink-0 hover:scale-105 transition-transform duration-200"
+                    className="flex-shrink-0 hover:scale-110 transition-all duration-300 transform hover:rotate-3"
                   >
-                    <Avatar className="w-12 h-12 ring-2 ring-purple-200 hover:ring-purple-400 transition-colors">
+                    <Avatar className="w-16 h-16 ring-4 ring-purple-200 hover:ring-purple-400 hover:ring-offset-2 transition-all duration-300 shadow-lg">
                       <AvatarImage
                         src={review.user.photo}
                         alt={`${review.user.name} ${review.user.surname}`}
                       />
-                      <AvatarFallback className="bg-purple-100 text-purple-600">
+                      <AvatarFallback className="bg-gradient-to-br from-purple-100 to-pink-100 text-purple-700 text-lg font-bold">
                         {review.user.name[0]}
                         {review.user.surname[0]}
                       </AvatarFallback>
@@ -132,32 +134,33 @@ const ReviewsSection = () => {
                   <div className="flex-1">
                     <button
                       onClick={() => handleUserClick(review.user)}
-                      className="text-left hover:text-purple-600 transition-colors"
+                      className="text-left hover:text-purple-600 transition-colors duration-300 group"
                     >
-                      <h4 className="font-semibold text-gray-800">
+                      <h4 className="font-bold text-xl text-gray-800 group-hover:text-purple-600">
                         {review.user.name} {review.user.surname}
                       </h4>
                     </button>
 
-                    <div className="flex items-center gap-2 mt-1">
+                    <div className="flex items-center gap-3 mt-2">
                       <div className="flex items-center">
                         {[...Array(5)].map((_, i) => (
                           <Star
                             key={i}
-                            className={`w-4 h-4 ${
+                            className={`w-5 h-5 transition-all duration-200 ${
                               i < review.rating
-                                ? "fill-yellow-400 text-yellow-400"
+                                ? "fill-yellow-400 text-yellow-400 hover:scale-110"
                                 : "text-gray-300"
                             }`}
+                            style={{ animationDelay: `${i * 100}ms` }}
                           />
                         ))}
                       </div>
-                      <span className="text-sm text-gray-500">
+                      <span className="text-sm text-gray-500 bg-gray-100 px-2 py-1 rounded-full">
                         {review.date}
                       </span>
                     </div>
 
-                    <p className="text-gray-700 mt-3 leading-relaxed">
+                    <p className="text-gray-700 mt-4 leading-relaxed text-lg">
                       {review.text}
                     </p>
                   </div>

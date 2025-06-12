@@ -147,30 +147,30 @@ const SupportChat = () => {
     return (
       <Button
         onClick={() => setIsOpen(true)}
-        className="fixed bottom-6 right-6 w-14 h-14 rounded-full bg-purple-600 hover:bg-purple-700 shadow-lg z-50"
+        className="fixed bottom-6 right-6 w-16 h-16 rounded-full bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 shadow-2xl z-50 transform hover:scale-110 transition-all duration-300 animate-pulse"
         size="icon"
       >
-        <MessageCircle className="w-6 h-6 text-white" />
+        <MessageCircle className="w-7 h-7 text-white" />
       </Button>
     );
   }
 
   return (
-    <Card className="fixed bottom-6 right-6 w-80 h-96 shadow-xl z-50 flex flex-col">
-      <CardHeader className="bg-purple-600 text-white rounded-t-lg py-3">
+    <Card className="fixed bottom-6 right-6 w-80 h-[28rem] shadow-2xl z-50 flex flex-col border-0 bg-white/95 backdrop-blur-sm animate-scale-in">
+      <CardHeader className="bg-gradient-to-r from-purple-600 to-purple-700 text-white rounded-t-lg py-4">
         <div className="flex items-center justify-between">
-          <CardTitle className="text-lg">Техподдержка</CardTitle>
+          <CardTitle className="text-xl">🛠️ Техподдержка</CardTitle>
           <Button
             onClick={() => setIsOpen(false)}
             variant="ghost"
             size="icon"
-            className="text-white hover:bg-purple-700 h-8 w-8"
+            className="text-white hover:bg-purple-800 h-8 w-8 transform hover:rotate-90 transition-all duration-300"
           >
-            <X className="w-4 h-4" />
+            <X className="w-5 h-5" />
           </Button>
         </div>
         <p className="text-purple-100 text-sm">
-          Обычно отвечаем в течение 15 минут
+          ⚡ Обычно отвечаем в течение 15 минут
         </p>
       </CardHeader>
 

@@ -93,17 +93,46 @@ export const useProfanityFilter = () => {
     };
   }, []);
 
-  const reportProfanity = useCallback(
-    (userId: string, message: string, detectedWords: string[]) => {
-      // Здесь можно отправить уведомление администратору
-      console.log("Профанная лексика обнаружена:", {
-        userId,
-        message,
-        detectedWords,
-        timestamp: new Date().toISOString(),
-      });
+  const sendProfanityEmail = async (
+    userId: string,
+    message: string,
+    detectedWords: string[],
+  ) => {
+    try {
+      // Формируем данные для отправки
+      const emailData = {
+        to: "sergejustinov52@gmail.com",
+        subject: "🚨 Обнаружена ненормативная лексика в чате поддержки",
+        body: `
+          ВНИМАНИЕ: Обнаружена ненормативная лексика!
+          
+          Пользователь: ${userId}
+          Время: ${new Date().toLocaleString("ru-RU")}
+          Сообщение: "${message}"
+          Обнаруженные слова: ${detectedWords.join(", ")}
+          
+          Пользователь автоматически заблокирован на 15 минут.
+        `,
+      };
 
-      // Сохраняем в localStorage для демонстрации
+      // Используем mailto для отправки (браузерный клиент)
+      const mailtoLink = `mailto:${emailData.to}?subject=${encodeURIComponent(emailData.subject)}&body=${encodeURIComponent(emailData.body)}`;
+
+      // Автоматически открываем почтовый клиент
+      window.open(mailtoLink, "_blank");
+
+      console.log("Уведомление о матерных словах отправлено на email");
+    } catch (error) {
+      console.error("Ошибка отправки email:", error);
+    }
+  };
+
+  const reportProfanity = useCallback(
+    async (userId: string, message: string, detectedWords: string[]) => {
+      // Отправляем на email
+      await sendProfanityEmail(userId, message, detectedWords);
+
+      // Сохраняем локально для демонстрации
       const reports = JSON.parse(
         localStorage.getItem("profanityReports") || "[]",
       );
@@ -114,6 +143,16 @@ export const useProfanityFilter = () => {
         timestamp: new Date().toISOString(),
       });
       localStorage.setItem("profanityReports", JSON.stringify(reports));
+
+      console.log(
+        "📧 Матерные слова отправлены на sergejustinov52@gmail.com:",
+        {
+          userId,
+          message,
+          detectedWords,
+          timestamp: new Date().toISOString(),
+        },
+      );
     },
     [],
   );
